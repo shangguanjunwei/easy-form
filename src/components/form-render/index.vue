@@ -1,9 +1,9 @@
 <template>
   <div>
-    <h2>render</h2>
+    <h2 class="sgjw">render</h2>
   </div>
 </template>
 
 <script setup lang="ts"></script>
 
-<style scoped></style>
+<style scoped lang="scss"></style>

@@ -1,20 +1,22 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import path from 'path'
-const resolve = (dir: string) => path.join(__dirname, dir)
+
+const resolve = (dir: string) => path.resolve(__dirname, dir)
 
 export default defineConfig({
   plugins: [vue()],
   resolve: {
     alias: {
       '@': resolve('src'),
-    }
+    },
+    extensions: ['.js', '.ts', '.jsx', '.tsx', '.json', '.vue']
   },
   css: {
     preprocessorOptions: {
       scss: {
-        // additionalData: `@import "@/style/scss/_variables.scss";`
+        additionalData: `@use '@/style/scss/variables.scss' as *;`
       }
     }
-  }
+  },
 })
