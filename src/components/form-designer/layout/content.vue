@@ -1,7 +1,7 @@
 <template>
   <el-scrollbar class="el-scrollbar-demo" always>
     <div class="content">
-      <el-form :model="form">
+      <el-form :model="formData">
         <draggable
           class="draggle-demo"
           :list="list"
@@ -9,13 +9,16 @@
           v-bind="draggable_ptions"
         >
           <template #item="{ element }">
+            <div>
+              {{ element.comp_name }}
+            </div>
+          </template>
+          <!-- <template #item="{ element }">
             <el-form-item v-if="element.is_form_item" :label="element.name">
-              <!-- 如果是输入型组件 -->
               <component :is="element.comp_name"></component>
             </el-form-item>
-            <!-- 如果不是输入型组件（用于结构处理的组件，比如el-row） -->
             <component v-else :is="element.comp_name"></component>
-          </template>
+          </template> -->
         </draggable>
       </el-form>
     </div>
@@ -26,12 +29,13 @@
 import draggable from "vuedraggable";
 import { ref } from "vue";
 
+// draggable 数据结构
 const list = ref([]);
 
-const form = ref({});
+// form表单数据
+const formData = ref({});
 
-console.log(JSON.stringify(list.value));
-
+// draggable 属性配置
 const draggable_ptions = ref({
   animation: 350,
   disabled: false,
@@ -45,7 +49,6 @@ const draggable_ptions = ref({
   height: 100%;
   padding: 10px;
   box-sizing: border-box;
-
   // 重写滚动条样式
   :deep(.el-scrollbar__bar) {
     padding: 12px 0;
@@ -56,7 +59,6 @@ const draggable_ptions = ref({
     border: 1px solid transparent;
     box-sizing: border-box;
     position: relative;
-
     .draggle-demo {
       min-height: calc(#{$main-height} - 22px);
       border: 1px solid transparent;

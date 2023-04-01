@@ -18,7 +18,7 @@
           :clone="onClone"
         >
           <template #item="{ element }">
-            <el-button class="el-button-demo" text bg>
+            <el-button class="el-button-demo" text bg :icon="element.icon_name">
               {{ element.name }}
             </el-button>
           </template>
@@ -31,6 +31,7 @@
 <script setup lang="ts">
 import draggable from "vuedraggable";
 import config from "@/config/index";
+import { getRandomIntFn } from "@/utils/random";
 import { ref } from "vue";
 
 const draggable_ptions = ref({
@@ -42,7 +43,7 @@ const draggable_ptions = ref({
 });
 
 const onClone = (original: any) => {
-  // console.log("11111", original);
+  // console.log("11111", getRandomIntFn());
   return { ...original };
 };
 </script>

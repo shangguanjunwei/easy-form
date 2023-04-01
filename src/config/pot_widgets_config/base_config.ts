@@ -1,5 +1,7 @@
-const configs: any[] = [
-    { id: 80, is_form_item: false, name: 'el-avatar', comp_name: 'el-avatar', icon_name: 'el-icon-edit-outline' },
+import { widget_config } from '@/types/config';
+
+const configs: widget_config[] = [
+    { is_form_item: false, name: '头像', type: 'el-avatar', comp_name: 'easy-el-avatar', icon_name: 'Edit' },
 ]
 
-export default configs
+export default configs;
