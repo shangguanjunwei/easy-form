@@ -44,14 +44,7 @@ import leftAside from "./layout/left_aside.vue";
   .el-aside {
     width: $aside-width;
     height: $aside-height;
-    box-sizing: border-box;
     position: relative;
-    &.left-aside {
-      border-right: $border;
-    }
-    &.right-aside {
-      border-left: $border;
-    }
   }
   .el-main {
     height: $main-height;
