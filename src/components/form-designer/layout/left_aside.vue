@@ -33,6 +33,7 @@ import draggable from "vuedraggable";
 import config from "@/config/index";
 import { getRandomIntFn } from "@/utils/random";
 import { ref } from "vue";
+import { cloneDeep } from "lodash";
 
 const draggable_ptions = ref({
   animation: 350,
@@ -42,10 +43,14 @@ const draggable_ptions = ref({
   itemKey: "id",
 });
 
-const onClone = (original: any) => {
-  // console.log("11111", getRandomIntFn());
-  return { ...original };
-};
+const onClone = (original: any) =>
+  Object.assign({}, cloneDeep(original), {
+    options: {
+      ...cloneDeep(original.options),
+      // 【问题】name 可能存在重复的情况，因为随机数可能相同
+      name: original.type + getRandomIntFn(),
+    },
+  });
 </script>
 
 <style scoped lang="scss">
@@ -63,7 +68,6 @@ const onClone = (original: any) => {
     grid-gap: 8px;
     padding: 8px;
     box-sizing: border-box;
-
     .el-button-demo {
       margin: 0;
       width: 100%;

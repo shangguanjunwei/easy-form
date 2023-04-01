@@ -7,6 +7,7 @@
           :list="list"
           :group="{ name: 'form' }"
           v-bind="draggable_ptions"
+          @change="log"
         >
           <template #item="{ element }">
             <div>
@@ -42,6 +43,10 @@ const draggable_ptions = ref({
   ghostClass: "ghost",
   itemKey: "id",
 });
+
+const log = (e: any) => {
+  console.log("change", e);
+};
 </script>
 
 <style scoped lang="scss">
