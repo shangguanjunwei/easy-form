@@ -16,6 +16,7 @@
           :list="item.config_list"
           :group="{ name: 'form', pull: 'clone', put: false }"
           v-bind="draggable_ptions"
+          :clone="onClone"
         >
           <template #item="{ element }">
             <el-button class="el-button-demo" text bg>
@@ -40,6 +41,11 @@ const draggable_ptions = ref({
   sort: false,
   itemKey: "id",
 });
+
+const onClone = (original: any) => {
+  console.log("11111", original);
+  return { ...original };
+};
 </script>
 
 <style scoped lang="scss">

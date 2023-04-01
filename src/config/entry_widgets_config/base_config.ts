@@ -21,4 +21,5 @@ const configs = [
     { id: 20, name: 'el-image', comp_name: 'el-image', icon_name: 'el-icon-edit-outline' },
 ];
 
+
 export default configs;

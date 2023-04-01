@@ -39,6 +39,7 @@ import leftAside from "./layout/left_aside.vue";
     height: $header-height;
     box-sizing: border-box;
     border-bottom: $border;
+    position: relative;
   }
   .el-aside {
     width: $aside-width;
@@ -55,7 +56,10 @@ import leftAside from "./layout/left_aside.vue";
   .el-main {
     height: $main-height;
     min-width: $main-min-width;
+    box-sizing: border-box;
+    position: relative;
     padding: 0;
+    background-color: #eee;
   }
 }
 </style>
