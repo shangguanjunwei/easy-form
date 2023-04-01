@@ -1,6 +1,6 @@
 <template>
   <el-scrollbar height="100%">
-    <el-collapse :model-value="config[0].id">
+    <el-collapse :model-value="config.map((item) => item.id)">
       <el-collapse-item
         v-for="(item, index) in config"
         :key="index"

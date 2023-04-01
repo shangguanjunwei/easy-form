@@ -9,11 +9,12 @@
           v-bind="draggable_ptions"
         >
           <template #item="{ element }">
-            <div>
-              <el-form-item :label="element.name">
-                <component :is="element.comp_name"></component>
-              </el-form-item>
-            </div>
+            <el-form-item v-if="element.is_form_item" :label="element.name">
+              <!-- 如果是输入型组件 -->
+              <component :is="element.comp_name"></component>
+            </el-form-item>
+            <!-- 如果不是输入型组件（用于结构处理的组件，比如el-row） -->
+            <component v-else :is="element.comp_name"></component>
           </template>
         </draggable>
       </el-form>
