@@ -1,6 +1,17 @@
+// 边框配置
 $border: 1px solid #e5e5e5;
+
+// 顶部 header 高度
 $header-height: 50px;
-$aside-width: 200px;
+
+// 侧边栏宽度
+$aside-width: 280px;
+
+// 侧边栏高度
 $aside-height: calc(100vh - #{$header-height});
+
+// 主体高度
 $main-height: calc(100vh - #{$header-height});
+
+// 主体最小宽度
 $main-min-width: 400px;
