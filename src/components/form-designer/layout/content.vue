@@ -10,16 +10,11 @@
           @change="log"
         >
           <template #item="{ element }">
-            <div>
-              {{ element.comp_name }}
-            </div>
-          </template>
-          <!-- <template #item="{ element }">
             <el-form-item v-if="element.is_form_item" :label="element.name">
               <component :is="element.comp_name"></component>
             </el-form-item>
             <component v-else :is="element.comp_name"></component>
-          </template> -->
+          </template>
         </draggable>
       </el-form>
     </div>

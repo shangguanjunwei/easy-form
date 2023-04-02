@@ -1,5 +1,5 @@
 <template>
-  <div>easy-el-input</div>
+  <el-input />
 </template>
 
 <script setup lang="ts"></script>
