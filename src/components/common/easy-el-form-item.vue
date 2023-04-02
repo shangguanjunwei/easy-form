@@ -1,5 +1,7 @@
 <template>
-  <div>easy-el-form-item</div>
+  <el-form-item>
+    
+  </el-form-item>
 </template>
 
 <script setup lang="ts"></script>

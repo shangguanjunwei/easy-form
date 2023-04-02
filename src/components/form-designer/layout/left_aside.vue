@@ -43,14 +43,21 @@ const draggable_ptions = ref({
   itemKey: "id",
 });
 
-const onClone = (original: any) =>
-  Object.assign({}, cloneDeep(original), {
+const onClone = (original: any) => {
+  const name = original.type + getRandomIntFn();
+  const res = Object.assign({}, cloneDeep(original), {
     options: {
-      ...cloneDeep(original.options),
-      // 【问题】name 可能存在重复的情况，因为随机数可能相同
-      name: original.type + getRandomIntFn(),
+      ...original.options,
+      name,
+    },
+    form_item_options: {
+      ...original.form_item_options,
+      prop: name,
+      label: original.type,
     },
   });
+  return res;
+};
 </script>
 
 <style scoped lang="scss">

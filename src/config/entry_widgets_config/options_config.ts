@@ -16,6 +16,7 @@ const options: options_type = {
         "suffix-icon": "", // 输入框尾部图标
         readonly: false, // 完全只读
         resize: "none", // 控制是否能被用户缩放
+        defaultValue: "33", // 输入框默认值
     },
     "el-select": {}
 }

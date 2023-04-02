@@ -1,17 +1,20 @@
 <template>
   <el-scrollbar class="el-scrollbar-demo" always>
-    <div class="content">
+    <div class="content" ref="esay_form">
       <el-form :model="formData">
         <draggable
           class="draggle-demo"
           :list="list"
           :group="{ name: 'form' }"
           v-bind="draggable_ptions"
-          @change="log"
+          @change="draggableChange"
         >
           <template #item="{ element }">
-            <el-form-item v-if="element.is_form_item" :label="element.name">
-              <component :is="element.comp_name"></component>
+            <el-form-item
+              v-if="element.is_form_item"
+              v-bind="element.form_item_options"
+            >
+              <component :is="element.comp_name" :options="element.options" />
             </el-form-item>
             <component v-else :is="element.comp_name"></component>
           </template>
@@ -24,13 +27,14 @@
 <script setup lang="ts">
 import draggable from "vuedraggable";
 import { ref } from "vue";
+import emitter from "@/mitt/index";
 
+// 表单 ref
+const esay_form = ref<any>(null);
 // draggable 数据结构
-const list = ref([]);
-
+const list = ref<any>([]);
 // form表单数据
-const formData = ref({});
-
+const formData = ref<any>({});
 // draggable 属性配置
 const draggable_ptions = ref({
   animation: 350,
@@ -38,10 +42,23 @@ const draggable_ptions = ref({
   ghostClass: "ghost",
   itemKey: "id",
 });
-
-const log = (e: any) => {
-  console.log("change", e);
+// 拖动元素发生改变的时候
+const draggableChange = (e: any) => {
+  // 如果是新增的元素，就给form表单增加元素
+  if (e.hasOwnProperty("added")) {
+    if (e.added.element.is_form_item) {
+      // 如果是表单元素，才给form表单增加元素
+      formData.value = Object.assign({}, formData.value, {
+        [e.added.element.options.name]: '',
+      });
+    }
+  }
 };
+
+// 监听事件
+emitter.on("form_data_change", (data: any) => {
+  formData.value = Object.assign({}, formData.value, data);
+});
 </script>
 
 <style scoped lang="scss">
