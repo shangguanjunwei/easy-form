@@ -1,5 +1,5 @@
 <template>
-  <div>easy-el-avatar</div>
+  <div>easy-el-avatar11</div>
 </template>
 
 <script setup lang="ts"></script>
