@@ -34,7 +34,15 @@ import config from "@/config/index";
 import { getRandomIntFn } from "@/utils/random";
 import { ref } from "vue";
 import { cloneDeep } from "lodash";
+// 输入型字段组件基本options配置
+import entry_options from "@/config/entry_widgets_config/options_config";
+// 输入型字段组件form-item配置
+import entry_form_item_options from "@/config/entry_widgets_config/form_item_config";
+// 非输入型字段组件基本options配置
+import pot_options from "@/config/pot_widgets_config/options_config";
+import { v4 as uuidv4 } from "uuid";
 
+// 动画效果
 const draggable_ptions = ref({
   animation: 350,
   disabled: false,
@@ -43,19 +51,28 @@ const draggable_ptions = ref({
   itemKey: "id",
 });
 
+// 克隆的时候
 const onClone = (original: any) => {
+  console.log(original.id);
   const name = original.type + getRandomIntFn();
-  const res = Object.assign({}, cloneDeep(original), {
-    options: {
-      ...original.options,
-      name,
-    },
-    form_item_options: {
-      ...original.form_item_options,
-      prop: name,
-      label: original.type,
-    },
-  });
+  let res: any = {};
+  if (original.is_form_item) {
+    res = Object.assign({}, cloneDeep(original), {
+      options: { ...entry_options[original.type], name }, // 基本配置
+      form_item_options: {
+        ...entry_form_item_options,
+        prop: name,
+        label: original.name,
+      }, // form-item配置
+      id: uuidv4(),
+    });
+  } else {
+    res = Object.assign({}, cloneDeep(original), {
+      options: { ...pot_options[original.type], name },
+      id: uuidv4(),
+    });
+  }
+  console.log("3333", res.id);
   return res;
 };
 </script>

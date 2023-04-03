@@ -49,7 +49,7 @@ const draggableChange = (e: any) => {
     if (e.added.element.is_form_item) {
       // 如果是表单元素，才给form表单增加元素
       formData.value = Object.assign({}, formData.value, {
-        [e.added.element.options.name]: '',
+        [e.added.element.options.name]: "",
       });
     }
   }
