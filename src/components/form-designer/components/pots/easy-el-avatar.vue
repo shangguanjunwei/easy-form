@@ -1,5 +1,5 @@
 <template>
-  <div style="margin-bottom: 10px">
+  <div style="margin-bottom: 10px; padding: 0 10px">
     <h1>{{ props.options.name }}</h1>
     <slot></slot>
   </div>

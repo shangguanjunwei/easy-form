@@ -5,9 +5,18 @@
     :group="{ name: 'form', put: !props.isFirst }"
     v-bind="draggable_ptions"
     @change="draggableChange"
+    handle=".move-btn"
   >
     <template #item="{ element }">
       <div class="draggle-div">
+        <div v-if="!props.isFirst" class="move-div">
+          <div class="handle-div left-top-div move-btn">
+            <el-icon><Rank /></el-icon>
+          </div>
+          <!-- <div class="handle-div right-bottom-div">
+            <el-icon><Delete /></el-icon>
+          </div> -->
+        </div>
         <el-form-item
           v-if="element.is_form_item"
           v-bind="element.form_item_options"
@@ -22,14 +31,6 @@
           :class="{ 'draggle-demo-outside-div': props.isFirst }"
           :tasks="element.children"
         />
-        <div v-if="!props.isFirst" class="move-div">
-          <div class="handle-div left-top-div">
-            <el-icon><Rank /></el-icon>
-          </div>
-          <div class="handle-div right-bottom-div">
-            <el-icon><Delete /></el-icon>
-          </div>
-        </div>
       </div>
     </template>
   </draggable>
@@ -62,7 +63,6 @@ const draggable_ptions = ref({
 
 // 拖动元素发生改变的时候
 const draggableChange = (e: any) => {
-  console.log("888888", e);
   // 如果是新增的元素
   if (e.hasOwnProperty("added")) {
     if (e.added.element.is_form_item) {
@@ -111,7 +111,7 @@ const draggableChange = (e: any) => {
         color: blue;
         transition: all 0.3s;
         &:hover {
-          background-color: rgba($color: lightblue, $alpha: 0.8);
+          background-color: rgba($color: lightblue, $alpha: 1);
         }
         &.left-top-div {
           top: 0;
