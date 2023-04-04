@@ -54,8 +54,9 @@ const draggable_ptions = ref({
 // 克隆的时候
 const onClone = (original: any) => {
   const name = original.type + getRandomIntFn();
+  const all_options = Object.assign({}, entry_options, pot_options);
   let res: any = Object.assign({}, cloneDeep(original), {
-    options: { ...pot_options[original.type], name },
+    options: { ...all_options[original.type], name },
     id: uuidv4(),
   });
   // 如果是表单元素，就给form表单增加元素
@@ -68,6 +69,7 @@ const onClone = (original: any) => {
       },
     });
   }
+  console.log("复制的元素", res);
   return res;
 };
 </script>
