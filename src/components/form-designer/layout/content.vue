@@ -1,65 +1,27 @@
 <template>
   <button @click="onClick">获取数据</button>
   <el-scrollbar class="el-scrollbar-demo" always>
-    <div class="content" ref="esay_form">
-      <el-form :model="formData">
-        <draggable
-          class="draggle-demo"
-          :list="list"
-          :group="{ name: 'form' }"
-          v-bind="draggable_ptions"
-          @change="draggableChange"
-        >
-          <template #item="{ element }">
-            <el-form-item
-              v-if="element.is_form_item"
-              v-bind="element.form_item_options"
-            >
-              <component :is="element.comp_name" :options="element.options" />
-            </el-form-item>
-            <component v-else :is="element.comp_name"></component>
-          </template>
-        </draggable>
+    <div class="content">
+      <el-form :model="formData" ref="esay_form">
+        <nested :tasks="list" />
       </el-form>
     </div>
   </el-scrollbar>
 </template>
 
 <script setup lang="ts">
-import draggable from "vuedraggable";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { useWidgetComponentMixin } from "@/mixins/widget_component_mixin";
+import nested from "@/components/common/nested.vue";
+const { formData } = useWidgetComponentMixin();
 
-const { updataFormData, formData } = useWidgetComponentMixin();
+const list = ref<any[]>([]);
 
 // 表单 ref
 const esay_form = ref<any>(null);
-// draggable 数据结构
-const list = ref<any>([]);
-// draggable 属性配置
-const draggable_ptions = ref({
-  animation: 350,
-  disabled: false,
-  ghostClass: "ghost",
-  itemKey: "id",
-});
 
 const onClick = () => {
   console.log("44444", formData.value);
-};
-
-// 拖动元素发生改变的时候
-const draggableChange = (e: any) => {
-  // 如果是新增的元素
-  if (e.hasOwnProperty("added")) {
-    if (e.added.element.is_form_item) {
-      // 如果是表单元素，才给 formData 增加元素
-      updataFormData({
-        [e.added.element.options.name]: e.added.element.options.default_value,
-      });
-      delete e.added.element.options.default_value;
-    }
-  }
 };
 </script>
 
@@ -78,11 +40,6 @@ const draggableChange = (e: any) => {
     border: 1px solid transparent;
     box-sizing: border-box;
     position: relative;
-    .draggle-demo {
-      min-height: calc(#{$main-height} - 22px);
-      border: 1px solid transparent;
-      box-sizing: border-box;
-    }
   }
 }
 </style>

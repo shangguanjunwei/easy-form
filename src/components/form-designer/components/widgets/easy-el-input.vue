@@ -14,4 +14,10 @@ const value = computed(() => formData.value[props.options.name]);
 const onInput = (e: any) => updataFormData({ [props.options.name]: e });
 </script>
 
-<style scoped></style>
+<style scoped lang="scss">
+.demo-div {
+  width: 100%;
+  min-height: 100px;
+  background-color: red;
+}
+</style>
