@@ -1,9 +1,9 @@
 <template>
-  <button @click="onClick">获取数据</button>
+  <!-- <button @click="onClick">获取数据</button> -->
   <el-scrollbar class="el-scrollbar-demo" always>
     <div class="content">
       <el-form :model="formData" ref="esay_form">
-        <nested :tasks="list" />
+        <nested :tasks="list" :isFirst="true" />
       </el-form>
     </div>
   </el-scrollbar>
@@ -13,16 +13,14 @@
 import { ref, watch } from "vue";
 import { useWidgetComponentMixin } from "@/mixins/widget_component_mixin";
 import nested from "@/components/common/nested.vue";
-const { formData } = useWidgetComponentMixin();
+import { v4 as uuidv4 } from "uuid";
+import draagable from "vuedraggable";
+const { updataFormData, formData } = useWidgetComponentMixin();
 
-const list = ref<any[]>([]);
+const list = ref<any[]>([{ id: uuidv4(), children: [] }]);
 
 // 表单 ref
 const esay_form = ref<any>(null);
-
-const onClick = () => {
-  console.log("44444", formData.value);
-};
 </script>
 
 <style scoped lang="scss">

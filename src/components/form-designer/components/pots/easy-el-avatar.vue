@@ -1,7 +1,18 @@
 <template>
-  <div>easy-el-avatar11</div>
+  <div style="margin-bottom: 10px">
+    <h1>{{ props.options.name }}</h1>
+    <slot></slot>
+  </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const props = defineProps({
+  options: {
+    type: Object,
+    default: () => ({}),
+    required: true,
+  },
+});
+</script>
 
 <style scoped></style>
