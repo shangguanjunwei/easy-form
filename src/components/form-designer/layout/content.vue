@@ -1,4 +1,5 @@
 <template>
+  <button @click="onClick">获取数据</button>
   <el-scrollbar class="el-scrollbar-demo" always>
     <div class="content" ref="esay_form">
       <el-form :model="formData">
@@ -43,6 +44,11 @@ const draggable_ptions = ref({
   ghostClass: "ghost",
   itemKey: "id",
 });
+
+const onClick = () => {
+  console.log(formData.value);
+};
+
 // 拖动元素发生改变的时候
 const draggableChange = (e: any) => {
   // 如果是新增的元素，就给form表单增加元素
@@ -52,6 +58,7 @@ const draggableChange = (e: any) => {
       emitter.emit("form_data_change", {
         [e.added.element.options.name]: e.added.element.options.default_value,
       });
+      delete e.added.element.options.default_value;
     }
   }
 };
@@ -59,6 +66,7 @@ const draggableChange = (e: any) => {
 // 监听事件
 emitter.on("form_data_change", (data: any) => {
   formData.value = Object.assign({}, formData.value, data);
+  emitter.emit("form_data", formData);
 });
 </script>
 
