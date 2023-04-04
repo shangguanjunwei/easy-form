@@ -28,15 +28,14 @@
 <script setup lang="ts">
 import draggable from "vuedraggable";
 import { ref } from "vue";
-import emitter from "@/mitt/index";
+import { useWidgetComponentMixin } from "@/mixins/widget_component_mixin";
+
+const { updataFormData, formData } = useWidgetComponentMixin();
 
 // 表单 ref
 const esay_form = ref<any>(null);
 // draggable 数据结构
 const list = ref<any>([]);
-// form表单数据
-const formData = ref<any>({});
-
 // draggable 属性配置
 const draggable_ptions = ref({
   animation: 350,
@@ -46,28 +45,23 @@ const draggable_ptions = ref({
 });
 
 const onClick = () => {
-  console.log(formData.value);
+  console.log("44444", formData.value);
 };
 
 // 拖动元素发生改变的时候
 const draggableChange = (e: any) => {
-  // 如果是新增的元素，就给form表单增加元素
+  // 如果是新增的元素
   if (e.hasOwnProperty("added")) {
     if (e.added.element.is_form_item) {
-      // 如果是表单元素，才给form表单增加元素
-      emitter.emit("form_data_change", {
+      // 如果是表单元素，才给 formData 增加元素
+      updataFormData({
         [e.added.element.options.name]: e.added.element.options.default_value,
       });
       delete e.added.element.options.default_value;
+      console.log("11111", formData.value);
     }
   }
 };
-
-// 监听事件
-emitter.on("form_data_change", (data: any) => {
-  formData.value = Object.assign({}, formData.value, data);
-  emitter.emit("form_data", formData);
-});
 </script>
 
 <style scoped lang="scss">

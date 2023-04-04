@@ -16,9 +16,6 @@ dependencies:
   lodash:
     specifier: ^4.17.21
     version: 4.17.21
-  mitt:
-    specifier: ^3.0.0
-    version: 3.0.0
   uuid:
     specifier: ^9.0.0
     version: 9.0.0
@@ -701,10 +698,6 @@ packages:
     dependencies:
       brace-expansion: 2.0.1
     dev: true
-
-  /mitt@3.0.0:
-    resolution: {integrity: sha512-7dX2/10ITVyqh4aOSVI9gdape+t9l2/8QxHrFmUXu4EEUpdlxl6RudZUPZoc+zuY2hk1j7XxVroIVIan/pD/SQ==}
-    dev: false
 
   /muggle-string@0.2.2:
     resolution: {integrity: sha512-YVE1mIJ4VpUMqZObFndk9CJu6DBJR/GB13p3tXuNbwD4XExaI5EOuRl6BHeIDxIqXZVxSfAC+y6U1Z/IxCfKUg==}
