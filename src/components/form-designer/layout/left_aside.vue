@@ -1,9 +1,6 @@
 <template>
   <el-scrollbar height="100%">
-    <el-collapse
-      class="el-collapse-demo"
-      :model-value="config.map((item) => item.id)"
-    >
+    <my-el-collapse :model-value="config.map((item) => item.id)">
       <el-collapse-item
         v-for="(item, index) in config"
         :key="index"
@@ -24,7 +21,7 @@
           </template>
         </draggable>
       </el-collapse-item>
-    </el-collapse>
+    </my-el-collapse>
   </el-scrollbar>
 </template>
 
@@ -32,6 +29,7 @@
 import draggable from "vuedraggable";
 import config from "@/config/index";
 import { getRandomIntFn } from "@/utils/random";
+import myElCollapse from "@/components/common/my-el-collapse.vue";
 import { ref } from "vue";
 import { cloneDeep } from "lodash";
 // 输入型字段组件基本options配置
@@ -41,6 +39,9 @@ import entry_form_item_options from "@/config/entry_widgets_config/form_item_con
 // 非输入型字段组件基本options配置
 import pot_options from "@/config/pot_widgets_config/options_config";
 import { v4 as uuidv4 } from "uuid";
+import { useWidgetComponentMixin } from "@/mixins/widget_component_mixin";
+
+const { formData } = useWidgetComponentMixin();
 
 // 动画效果
 const draggable_ptions = ref({
@@ -51,9 +52,19 @@ const draggable_ptions = ref({
   itemKey: "id",
 });
 
+// 生成一个字段名
+const getName = (pre: string) => {
+  let name: string = pre + getRandomIntFn();
+  if (formData.value.hasOwnProperty(name)) {
+    name = getName(pre) as string;
+  } else {
+    return name;
+  }
+};
+
 // 克隆的时候
 const onClone = (original: any) => {
-  const name = original.type + getRandomIntFn();
+  const name = getName(original.type);
   const all_options = Object.assign({}, entry_options, pot_options);
   let res: any = Object.assign({}, cloneDeep(original), {
     options: { ...all_options[original.type], name },
@@ -75,24 +86,15 @@ const onClone = (original: any) => {
 </script>
 
 <style scoped lang="scss">
-.el-collapse-demo {
-  :deep(.el-collapse-item__content) {
-    padding: 0;
-  }
-  :deep(.el-collapse-item__header) {
-    height: 36px;
-    padding: 0 8px 0;
-  }
-  .draggable-list {
-    display: grid;
-    grid-template-columns: repeat(2, calc(50% - 4px));
-    grid-gap: 8px;
-    padding: 8px;
-    box-sizing: border-box;
-    .el-button-demo {
-      margin: 0;
-      width: 100%;
-    }
+.draggable-list {
+  display: grid;
+  grid-template-columns: repeat(2, calc(50% - 4px));
+  grid-gap: 8px;
+  padding: 8px;
+  box-sizing: border-box;
+  .el-button-demo {
+    margin: 0;
+    width: 100%;
   }
 }
 </style>

@@ -58,7 +58,6 @@ const draggableChange = (e: any) => {
         [e.added.element.options.name]: e.added.element.options.default_value,
       });
       delete e.added.element.options.default_value;
-      console.log("11111", formData.value);
     }
   }
 };
