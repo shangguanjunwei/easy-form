@@ -79,6 +79,8 @@ const onClone = (original: any) => {
         label: original.name,
       },
     });
+  } else {
+    Object.assign(res, { children: [] });
   }
   console.log("复制的元素", res);
   return res;
