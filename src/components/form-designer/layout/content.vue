@@ -35,6 +35,7 @@ const esay_form = ref<any>(null);
 const list = ref<any>([]);
 // form表单数据
 const formData = ref<any>({});
+
 // draggable 属性配置
 const draggable_ptions = ref({
   animation: 350,
@@ -48,8 +49,8 @@ const draggableChange = (e: any) => {
   if (e.hasOwnProperty("added")) {
     if (e.added.element.is_form_item) {
       // 如果是表单元素，才给form表单增加元素
-      formData.value = Object.assign({}, formData.value, {
-        [e.added.element.options.name]: "",
+      emitter.emit("form_data_change", {
+        [e.added.element.options.name]: e.added.element.options.default_value,
       });
     }
   }
