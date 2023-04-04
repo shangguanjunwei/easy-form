@@ -53,26 +53,21 @@ const draggable_ptions = ref({
 
 // 克隆的时候
 const onClone = (original: any) => {
-  console.log(original.id);
   const name = original.type + getRandomIntFn();
-  let res: any = {};
+  let res: any = Object.assign({}, cloneDeep(original), {
+    options: { ...pot_options[original.type], name },
+    id: uuidv4(),
+  });
+  // 如果是表单元素，就给form表单增加元素
   if (original.is_form_item) {
-    res = Object.assign({}, cloneDeep(original), {
-      options: { ...entry_options[original.type], name }, // 基本配置
+    Object.assign(res, {
       form_item_options: {
         ...entry_form_item_options,
         prop: name,
         label: original.name,
-      }, // form-item配置
-      id: uuidv4(),
-    });
-  } else {
-    res = Object.assign({}, cloneDeep(original), {
-      options: { ...pot_options[original.type], name },
-      id: uuidv4(),
+      },
     });
   }
-  console.log("3333", res.id);
   return res;
 };
 </script>
