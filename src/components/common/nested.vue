@@ -8,7 +8,16 @@
     handle=".move-btn"
   >
     <template #item="{ element }">
-      <div class="draggle-div" @click.stop.prevent="onCloseEvent(element)">
+      <div
+        class="draggle-div"
+        :class="{
+          is_active: active_element_id === element.id && !props.isFirst,
+        }"
+        @click.stop.prevent="onChooseElement(element)"
+      >
+        <div v-if="!props.isFirst" class="handle-div left-top-div move-btn">
+          <el-icon><Rank /></el-icon>
+        </div>
         <!-- <div v-if="!props.isFirst" class="move-div">
           <div class="handle-div left-top-div move-btn">
             <el-icon><Rank /></el-icon>
@@ -31,6 +40,13 @@
           :class="{ 'draggle-demo-outside-div': props.isFirst }"
           :tasks="element.children"
         />
+        <div
+          v-if="!props.isFirst"
+          class="handle-div right-bottom-div"
+          @click="deleteEvement(element.id)"
+        >
+          <el-icon><Delete /></el-icon>
+        </div>
       </div>
     </template>
   </draggable>
@@ -40,7 +56,9 @@
 import draggable from "vuedraggable";
 import { ref } from "vue";
 import { useWidgetComponentMixin } from "@/mixins/widget_component_mixin";
+import { useListMixin } from "@/mixins/list_mixin";
 const { updataFormData } = useWidgetComponentMixin();
+const { list, active_element_id, updata_active_id } = useListMixin();
 const props = defineProps({
   tasks: {
     type: Array,
@@ -70,13 +88,24 @@ const draggableChange = (e: any) => {
       updataFormData({
         [e.added.element.options.name]: e.added.element.options.default_value,
       });
+      // 更新 active_id
+      updata_active_id(e.added.element.id);
       delete e.added.element.options.default_value;
     }
   }
 };
+// 选中元素
+const onChooseElement = (e: any) => {
+  updata_active_id(props.isFirst ? "" : e.id);
+};
 
-const onCloseEvent = (e: any) => {
-  console.log("44444", e);
+const deleteEvement = (id: string) => {
+  updata_active_id("");
+  props.tasks.splice(
+    props.tasks.findIndex((item: any) => item.id === id),
+    1
+  );
+  console.log(list.value);
 };
 </script>
 
@@ -96,36 +125,35 @@ const onCloseEvent = (e: any) => {
   }
   .draggle-div {
     position: relative;
-    .move-div {
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      top: -1px;
-      left: -1px;
-      border: 1px solid lightblue;
-      .handle-div {
-        position: absolute;
-        background-color: rgba($color: lightblue, $alpha: 0.4);
+    &.is_active {
+      outline: 1px solid lightblue;
+      > .handle-div {
         display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 14px;
-        padding: 2px 6px;
-        cursor: pointer;
-        color: blue;
-        transition: all 0.3s;
-        &:hover {
-          background-color: rgba($color: lightblue, $alpha: 1);
-        }
-        &.left-top-div {
-          top: 0;
-          left: 0;
-        }
-        &.right-bottom-div {
-          right: 0;
-          bottom: 0;
-          color: red;
-        }
+      }
+    }
+
+    .handle-div {
+      display: none;
+      position: absolute;
+      background-color: rgba($color: lightblue, $alpha: 0.4);
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      padding: 2px 6px;
+      cursor: pointer;
+      color: blue;
+      transition: all 0.3s;
+      &:hover {
+        background-color: rgba($color: lightblue, $alpha: 1);
+      }
+      &.left-top-div {
+        top: 0;
+        left: 0;
+      }
+      &.right-bottom-div {
+        right: 0;
+        bottom: 0;
+        color: red;
       }
     }
   }
