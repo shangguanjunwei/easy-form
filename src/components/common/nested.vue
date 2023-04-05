@@ -8,15 +8,15 @@
     handle=".move-btn"
   >
     <template #item="{ element }">
-      <div class="draggle-div">
-        <div v-if="!props.isFirst" class="move-div">
+      <div class="draggle-div" @click.stop.prevent="onCloseEvent(element)">
+        <!-- <div v-if="!props.isFirst" class="move-div">
           <div class="handle-div left-top-div move-btn">
             <el-icon><Rank /></el-icon>
           </div>
-          <!-- <div class="handle-div right-bottom-div">
+          <div class="handle-div right-bottom-div">
             <el-icon><Delete /></el-icon>
-          </div> -->
-        </div>
+          </div>
+        </div> -->
         <el-form-item
           v-if="element.is_form_item"
           v-bind="element.form_item_options"
@@ -73,6 +73,10 @@ const draggableChange = (e: any) => {
       delete e.added.element.options.default_value;
     }
   }
+};
+
+const onCloseEvent = (e: any) => {
+  console.log("44444", e);
 };
 </script>
 

@@ -10,15 +10,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { ref } from "vue";
 import { useWidgetComponentMixin } from "@/mixins/widget_component_mixin";
+import { useListMixin } from "@/mixins/list_mixin";
 import nested from "@/components/common/nested.vue";
-import { v4 as uuidv4 } from "uuid";
-import draagable from "vuedraggable";
-const { updataFormData, formData } = useWidgetComponentMixin();
-
-const list = ref<any[]>([{ id: uuidv4(), children: [] }]);
-
+const { formData } = useWidgetComponentMixin();
+const { list } = useListMixin();
 // 表单 ref
 const esay_form = ref<any>(null);
 </script>
