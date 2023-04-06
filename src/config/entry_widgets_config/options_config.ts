@@ -1,9 +1,13 @@
 type options_type = {
-  [key: string]: object;
+  [key: string]: {
+    name: string;
+    [key: string]: any;
+  };
 };
 
 const options: options_type = {
   "el-input": {
+    name: "",
     maxlength: null, // 最大输入长度
     minlength: null, // 最小输入长度
     "show-word-limit": false, // 是否显示输入字数统计
@@ -15,7 +19,9 @@ const options: options_type = {
     readonly: false, // 完全只读
     default_value: "", // 输入框默认值
   },
-  "el-select": {},
+  "el-select": {
+    name: "",
+  },
 };
 
 export default options;

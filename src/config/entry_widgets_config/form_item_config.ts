@@ -1,4 +1,5 @@
 type options_type = {
+  prop: string;
   [key: string]: any;
 };
 

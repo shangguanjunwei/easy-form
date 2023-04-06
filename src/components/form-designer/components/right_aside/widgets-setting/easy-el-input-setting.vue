@@ -119,7 +119,7 @@ import { useListMixin } from "@/mixins/list_mixin";
 import { useWidgetComponentMixin } from "@/mixins/widget_component_mixin";
 import { watchEffect, ref } from "vue";
 import dict from "@/config/common_config";
-import { cloneDeep } from "lodash";
+import { cloneDeep, isEmpty } from "lodash";
 const { updata_form_item_options, updata_options, active_element } =
   useListMixin();
 const { formData, updataFormData } = useWidgetComponentMixin();
@@ -129,23 +129,31 @@ const form_item_options_form = ref<any>({});
 // item 配置项
 const item_options_form = ref<any>({});
 
+// 配置项赋初始默认值
 watchEffect(() => {
   form_item_options_form.value =
     cloneDeep(active_element.value?.form_item_options) || {};
   item_options_form.value = cloneDeep(active_element.value?.options) || {};
 });
 
+// 监听如果用户直接在表单填写数据的时候，将其直接给到默认值上
 watchEffect(() => {
+  if (!formData.value?.hasOwnProperty(item_options_form.value.name)) return;
   item_options_form.value.default_value =
     formData.value[item_options_form.value.name];
 });
 
+// 监听数据配置项发生改变的时候，将其直接更新到视图上
 watchEffect(() => {
   updata_form_item_options(form_item_options_form.value);
   updata_options(item_options_form.value);
 });
 
+// 监听数据配置项默认值发生改变的时候，直接将其更新到视图上显示
 watchEffect(() => {
+  if (isEmpty(item_options_form.value)) return;
+  console.log("77777777", JSON.stringify(item_options_form.value));
+
   updataFormData({
     [item_options_form.value.name]: cloneDeep(
       item_options_form.value.default_value

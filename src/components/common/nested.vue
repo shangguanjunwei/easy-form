@@ -40,7 +40,7 @@
         <div
           v-if="!props.isFirst"
           class="handle-div right-bottom-div"
-          @click="deleteEvement(element.id)"
+          @click="deleteEvement(element.id, element.options.name)"
         >
           <el-icon><Delete /></el-icon>
         </div>
@@ -55,7 +55,7 @@ import { ref } from "vue";
 import { useWidgetComponentMixin } from "@/mixins/widget_component_mixin";
 import { useListMixin } from "@/mixins/list_mixin";
 import { cloneDeep } from "lodash";
-const { updataFormData } = useWidgetComponentMixin();
+const { updataFormData, deleteFormData } = useWidgetComponentMixin();
 const { active_element_id, updata_active_id } = useListMixin();
 const props = defineProps({
   tasks: {
@@ -97,12 +97,14 @@ const onChooseElement = (id: string) => {
   updata_active_id(props.isFirst ? "" : id);
 };
 
-const deleteEvement = (id: string) => {
+// 删除元素
+const deleteEvement = (id: string, key: string) => {
   onChooseElement("");
   props.tasks.splice(
     props.tasks.findIndex((item: any) => item.id === id),
     1
   );
+  deleteFormData(key);
 };
 </script>
 
