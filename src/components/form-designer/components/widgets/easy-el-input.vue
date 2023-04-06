@@ -11,7 +11,10 @@ const props = defineProps(["options"]);
 // 获取表单数据
 const value = computed(() => formData.value[props.options.name]);
 // 更新表单数据
-const onInput = (e: any) => updataFormData({ [props.options.name]: e });
+const onInput = (e: any) => {
+  console.log("更新数据", props.options.name, e);
+  updataFormData({ [props.options.name]: e });
+};
 </script>
 
 <style scoped lang="scss"></style>

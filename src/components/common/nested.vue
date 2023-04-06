@@ -54,6 +54,7 @@ import draggable from "vuedraggable";
 import { ref } from "vue";
 import { useWidgetComponentMixin } from "@/mixins/widget_component_mixin";
 import { useListMixin } from "@/mixins/list_mixin";
+import { cloneDeep } from "lodash";
 const { updataFormData } = useWidgetComponentMixin();
 const { active_element_id, updata_active_id } = useListMixin();
 const props = defineProps({
@@ -83,9 +84,11 @@ const draggableChange = (e: any) => {
     if (e.added.element.is_form_item) {
       // 如果是表单元素，才给 formData 增加元素
       updataFormData({
-        [e.added.element.options.name]: e.added.element.options.default_value,
+        [e.added.element.options.name]: cloneDeep(
+          e.added.element.options.default_value
+        ),
       });
-      delete e.added.element.options.default_value;
+      // delete e.added.element.options.default_value;
     }
     onChooseElement(e.added.element.id);
   }

@@ -1,0 +1,25 @@
+const dict = {
+  label: "标签",
+  type: "类型",
+  maxlength: "最大长度",
+  minlength: "最小长度",
+  "show-word-limit": "显示输入字数统计",
+  placeholder: "输入框占位文本",
+  clearable: "是否可清空",
+  "show-password": "是否显示切换密码图标",
+  disabled: "是否禁用",
+  "prefix-icon": "输入框头部图标",
+  "suffix-icon": "输入框尾部图标",
+  readonly: "完全只读",
+  resize: "控制是否能被用户缩放",
+  default_value: "输入框默认值",
+  prop: "绑定name",
+  "label-width": "标签宽度",
+  required: "是否必填",
+  rules: "验证规则",
+  "show-message": "显示校验错误信息",
+  "inline-message": "行内展示校验信息",
+  size: "输入框尺寸",
+};
+
+export default dict;
