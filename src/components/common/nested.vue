@@ -15,31 +15,28 @@
         }"
         @click.stop.prevent="onChooseElement(element)"
       >
+        <!-- 拖动按钮 -->
         <div v-if="!props.isFirst" class="handle-div left-top-div move-btn">
           <el-icon><Rank /></el-icon>
         </div>
-        <!-- <div v-if="!props.isFirst" class="move-div">
-          <div class="handle-div left-top-div move-btn">
-            <el-icon><Rank /></el-icon>
-          </div>
-          <div class="handle-div right-bottom-div">
-            <el-icon><Delete /></el-icon>
-          </div>
-        </div> -->
+        <!-- 表单元素 -->
         <el-form-item
           v-if="element.is_form_item"
           v-bind="element.form_item_options"
         >
           <component :is="element.comp_name" :options="element.options" />
         </el-form-item>
+        <!-- 非表单元素 -->
         <component v-else :is="element.comp_name" :options="element.options">
           <nested class="draggle-demo-min-div" :tasks="element.children" />
         </component>
+        <!-- 嵌套元素 -->
         <nested
           v-if="props.isFirst"
           :class="{ 'draggle-demo-outside-div': props.isFirst }"
           :tasks="element.children"
         />
+        <!-- 删除按钮 -->
         <div
           v-if="!props.isFirst"
           class="handle-div right-bottom-div"
@@ -89,9 +86,9 @@ const draggableChange = (e: any) => {
       updataFormData({
         [e.added.element.options.name]: e.added.element.options.default_value,
       });
-      onChooseElement(e.added.element);
       delete e.added.element.options.default_value;
     }
+    onChooseElement(e.added.element);
   }
 };
 // 选中元素

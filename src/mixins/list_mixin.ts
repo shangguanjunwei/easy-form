@@ -1,5 +1,6 @@
 import { ref, computed } from "vue";
 import { v4 as uuidv4 } from "uuid";
+import { cloneDeep } from "lodash";
 
 type list_item = {
   id: string;
@@ -8,6 +9,7 @@ type list_item = {
 
 const list = ref<list_item[]>([{ id: uuidv4(), children: [] }]);
 const _active_element_id = ref<string>(""); // 当前选中的元素id
+const _active_element = ref<list_item>(); // 当前选中的元素
 
 // 更新当前选中的元素
 const setItemValue = (
@@ -26,25 +28,45 @@ const setItemValue = (
   });
 };
 
+// 找到选中的元素
+const findItem = (list: list_item[]) => {
+  let res: list_item = {} as list_item;
+  list.forEach((item: list_item) => {
+    if (item.id === _active_element_id.value) {
+      res = cloneDeep(item);
+    } else {
+      if (item.children) {
+        res = findItem(item.children);
+      }
+    }
+  });
+  return res;
+};
+
 export const useListMixin = () => {
   // 更新当前选中的元素id
   const updata_active_id = (id: string) => {
     _active_element_id.value = id;
+    _active_element.value = findItem(list.value);
   };
+  // 更新当前选中的元素 options
   const updata_options = (obj: Object) => {
     setItemValue(list.value, "options", obj);
   };
-  // 更新当前选中的元素
+  // 更新当前选中的元素 form_item_options
   const updata_form_item_options = (obj: Object) => {
     setItemValue(list.value, "form_item_options", obj);
   };
   // 当前选中的元素 id
-  const active_element_id = computed(() => _active_element_id.value);
+  const active_element_id = computed(() => cloneDeep(_active_element_id.value));
+  // 当前选中的元素
+  const active_element = computed(() => cloneDeep(_active_element.value));
   return {
     list,
     active_element_id,
     updata_active_id,
     updata_options,
     updata_form_item_options,
+    active_element,
   };
 };
