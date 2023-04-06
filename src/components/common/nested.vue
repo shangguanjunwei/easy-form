@@ -13,7 +13,7 @@
         :class="{
           is_active: active_element_id === element.id && !props.isFirst,
         }"
-        @click.stop.prevent="onChooseElement(element)"
+        @click.stop.prevent="onChooseElement(element.id)"
       >
         <!-- 拖动按钮 -->
         <div v-if="!props.isFirst" class="handle-div left-top-div move-btn">
@@ -55,8 +55,7 @@ import { ref } from "vue";
 import { useWidgetComponentMixin } from "@/mixins/widget_component_mixin";
 import { useListMixin } from "@/mixins/list_mixin";
 const { updataFormData } = useWidgetComponentMixin();
-const { active_element_id, updata_active_id, updata_form_item_options } =
-  useListMixin();
+const { active_element_id, updata_active_id } = useListMixin();
 const props = defineProps({
   tasks: {
     type: Array,
@@ -88,16 +87,16 @@ const draggableChange = (e: any) => {
       });
       delete e.added.element.options.default_value;
     }
-    onChooseElement(e.added.element);
+    onChooseElement(e.added.element.id);
   }
 };
 // 选中元素
-const onChooseElement = (e: any) => {
-  updata_active_id(props.isFirst ? "" : e.id);
+const onChooseElement = (id: string) => {
+  updata_active_id(props.isFirst ? "" : id);
 };
 
 const deleteEvement = (id: string) => {
-  updata_active_id("");
+  onChooseElement("");
   props.tasks.splice(
     props.tasks.findIndex((item: any) => item.id === id),
     1

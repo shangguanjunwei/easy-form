@@ -14,6 +14,7 @@
   :deep(.el-collapse-item__header) {
     height: 36px;
     padding: 0 8px 0;
+    line-height: 1;
   }
 }
 </style>

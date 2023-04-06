@@ -1,9 +1,8 @@
 import { ref, computed } from "vue";
 import { v4 as uuidv4 } from "uuid";
-import { cloneDeep } from "lodash";
+import { cloneDeep, isEmpty } from "lodash";
 
 type list_item = {
-  id: string;
   [key: string]: any;
 };
 
@@ -30,24 +29,25 @@ const setItemValue = (
 
 // 找到选中的元素
 const findItem = (list: list_item[]) => {
-  let res: list_item = {} as list_item;
-  list.forEach((item: list_item) => {
+  let res: list_item = {};
+  for (let i = 0; i < list.length; i++) {
+    const item = list[i];
     if (item.id === _active_element_id.value) {
       res = cloneDeep(item);
     } else {
-      if (item.children) {
+      if (!isEmpty(item.children)) {
         res = findItem(item.children);
       }
     }
-  });
+  }
   return res;
 };
 
 export const useListMixin = () => {
   // 更新当前选中的元素id
   const updata_active_id = (id: string) => {
-    _active_element_id.value = id;
-    _active_element.value = findItem(list.value);
+    _active_element_id.value = !id ? "" : id;
+    _active_element.value = !id ? {} : findItem(list.value);
   };
   // 更新当前选中的元素 options
   const updata_options = (obj: Object) => {
