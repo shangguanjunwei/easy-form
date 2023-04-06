@@ -130,8 +130,14 @@ const form_item_options_form = ref<any>({});
 const item_options_form = ref<any>({});
 
 watchEffect(() => {
-  form_item_options_form.value = active_element.value?.form_item_options || {};
-  item_options_form.value = active_element.value?.options || {};
+  form_item_options_form.value =
+    cloneDeep(active_element.value?.form_item_options) || {};
+  item_options_form.value = cloneDeep(active_element.value?.options) || {};
+});
+
+watchEffect(() => {
+  item_options_form.value.default_value =
+    formData.value[item_options_form.value.name];
 });
 
 watchEffect(() => {
@@ -140,12 +146,11 @@ watchEffect(() => {
 });
 
 watchEffect(() => {
-  console.log("更新数据2", item_options_form.value.default_value);
-  // updataFormData({
-  //   [item_options_form.value.name]: cloneDeep(
-  //     item_options_form.value.default_value
-  //   ),
-  // });
+  updataFormData({
+    [item_options_form.value.name]: cloneDeep(
+      item_options_form.value.default_value
+    ),
+  });
 });
 </script>
 

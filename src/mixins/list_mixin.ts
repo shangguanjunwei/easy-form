@@ -47,6 +47,7 @@ const findItem = (list: list_item[]) => {
 export const useListMixin = () => {
   // 更新当前选中的元素id
   const updata_active_id = (id: string) => {
+    if (id === _active_element_id.value) return;
     _active_element_id.value = !id ? "" : id;
     _active_element.value = !id ? {} : findItem(list.value);
   };

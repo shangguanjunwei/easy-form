@@ -1,12 +1,15 @@
 import { cloneDeep } from "lodash";
 import { ref, computed } from "vue";
 
-const _formData = ref<Object>({});
+const _formData = ref<{ [key: string]: any }>({});
 
 export const useWidgetComponentMixin = () => {
   // 更新表单数据
   const updataFormData = (data: { [key: string]: any }) => {
-    _formData.value = Object.assign({}, _formData.value, data);
+    let keys = Object.keys(data);
+    keys.forEach((key) => {
+      _formData.value[key] = cloneDeep(data[key]);
+    });
   };
 
   // 获取表单数据

@@ -88,7 +88,6 @@ const draggableChange = (e: any) => {
           e.added.element.options.default_value
         ),
       });
-      // delete e.added.element.options.default_value;
     }
     onChooseElement(e.added.element.id);
   }
