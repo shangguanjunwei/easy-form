@@ -31,9 +31,10 @@ const setItemValue = (
 const findItem = (list: list_item[]) => {
   let res: list_item = {};
   for (let i = 0; i < list.length; i++) {
-    const item = list[i];
+    const item = cloneDeep(list[i]);
     if (item.id === _active_element_id.value) {
       res = cloneDeep(item);
+      break; // 找到就跳出循环
     } else {
       if (!isEmpty(item.children)) {
         res = findItem(item.children);
