@@ -58,7 +58,8 @@ import { ref } from "vue";
 import { useWidgetComponentMixin } from "@/mixins/widget_component_mixin";
 import { useListMixin } from "@/mixins/list_mixin";
 const { updataFormData } = useWidgetComponentMixin();
-const { list, active_element_id, updata_active_id } = useListMixin();
+const { active_element_id, updata_active_id, updata_form_item_options } =
+  useListMixin();
 const props = defineProps({
   tasks: {
     type: Array,
@@ -88,8 +89,7 @@ const draggableChange = (e: any) => {
       updataFormData({
         [e.added.element.options.name]: e.added.element.options.default_value,
       });
-      // 更新 active_id
-      updata_active_id(e.added.element.id);
+      onChooseElement(e.added.element);
       delete e.added.element.options.default_value;
     }
   }
@@ -105,7 +105,6 @@ const deleteEvement = (id: string) => {
     props.tasks.findIndex((item: any) => item.id === id),
     1
   );
-  console.log(list.value);
 };
 </script>
 
