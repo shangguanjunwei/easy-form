@@ -12,7 +12,7 @@ const _active_element = ref<any>(); // 当前选中的元素
 export const useListMixin = () => {
   // 更新当前选中的元素
   const updata_active_element = (element: Object) => {
-    console.log('执行')
+    console.log('执行选中元素')
     _active_element.value = element;
   };
   // 删除当前选中的元素

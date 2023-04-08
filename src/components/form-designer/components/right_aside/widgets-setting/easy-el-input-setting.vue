@@ -116,14 +116,6 @@ const form_item_options_form = ref<any>({});
 // item 配置项
 const item_options_form = ref<any>({});
 
-onMounted(() => {
-  console.log("创建出来");
-});
-
-onUnmounted(() => {
-  console.log("111销毁");
-});
-
 // onMounted(() => {
 //   console.log("66666");
 //   form_item_options_form.value =
