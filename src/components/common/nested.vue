@@ -11,27 +11,27 @@
       <div
         class="draggle-div"
         :class="{
-          is_active: active_element_id === element.id && !props.isFirst,
+          is_active: active_element?.id === element.id && !props.isFirst,
         }"
-        @click.stop.prevent="onChooseElement(element.id)"
+        @click.stop.prevent="onChooseElement(element)"
       >
         <!-- 拖动按钮 -->
         <div v-if="!props.isFirst" class="handle-div left-top-div move-btn">
           <el-icon><Rank /></el-icon>
         </div>
-        
+
         <!-- 表单元素 -->
         <el-form-item
           v-if="element.is_form_item"
           v-bind="element.form_item_options"
         >
-        {{ element.id }}
           <component
             :is="element.comp_name"
             :options="element.options"
             :key="element.id"
           />
         </el-form-item>
+
         <!-- 非表单元素 -->
         <component
           v-else
@@ -41,17 +41,19 @@
         >
           <nested class="draggle-demo-min-div" :tasks="element.children" />
         </component>
+
         <!-- 嵌套元素 -->
         <nested
           v-if="props.isFirst"
           :class="{ 'draggle-demo-outside-div': props.isFirst }"
           :tasks="element.children"
         />
+
         <!-- 删除按钮 -->
         <div
           v-if="!props.isFirst"
           class="handle-div right-bottom-div"
-          @click="deleteEvement(element.id, element.options.name)"
+          @click.stop="deleteEvement(element)"
         >
           <el-icon><Delete /></el-icon>
         </div>
@@ -67,7 +69,8 @@ import { useWidgetComponentMixin } from "@/mixins/widget_component_mixin";
 import { useListMixin } from "@/mixins/list_mixin";
 import { cloneDeep } from "lodash";
 const { updataFormData, deleteFormData } = useWidgetComponentMixin();
-const { active_element_id, updata_active_id } = useListMixin();
+const { updata_active_element, delete_active_element, active_element } =
+  useListMixin();
 const props = defineProps({
   tasks: {
     type: Array,
@@ -100,22 +103,28 @@ const draggableChange = (e: any) => {
         ),
       });
     }
-    onChooseElement(e.added.element.id);
+    // 更新选中的元素
+    updata_active_element(e.added.element);
   }
 };
 // 选中元素
-const onChooseElement = (id: string) => {
-  updata_active_id(props.isFirst ? "" : id);
+const onChooseElement = (element: any) => {
+  // 如果是第一层或者是当前选中的元素，不做任何操作
+  if (props.isFirst || element.id === active_element.value.id) return;
+  updata_active_element(element);
 };
 
 // 删除元素
-const deleteEvement = (id: string, key: string) => {
-  onChooseElement("");
+const deleteEvement = (element: any) => {
+  // 删除选中元素
+  delete_active_element();
+  // 删除结构
   props.tasks.splice(
-    props.tasks.findIndex((item: any) => item.id === id),
+    props.tasks.findIndex((item: any) => item.id === element.id),
     1
   );
-  deleteFormData(key);
+  // 删除表单数据
+  deleteFormData(element.options.name);
 };
 </script>
 

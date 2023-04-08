@@ -104,7 +104,7 @@
 import myRightElCollapse from "../components/my-right-el-collapse.vue";
 import { useListMixin } from "@/mixins/list_mixin";
 import { useWidgetComponentMixin } from "@/mixins/widget_component_mixin";
-import { ref, watchPostEffect, onMounted } from "vue";
+import { ref, watchPostEffect, onMounted, onUnmounted } from "vue";
 import dict from "@/config/common_config";
 import { cloneDeep, isEmpty } from "lodash";
 const { updata_form_item_options, updata_options, active_element } =
@@ -117,38 +117,46 @@ const form_item_options_form = ref<any>({});
 const item_options_form = ref<any>({});
 
 onMounted(() => {
-  console.log("66666");
-  form_item_options_form.value =
-    cloneDeep(active_element.value?.form_item_options) || {};
-  item_options_form.value = cloneDeep(active_element.value?.options) || {};
+  console.log("创建出来");
 });
 
-// 配置项赋初始默认值;
-watchPostEffect(() => {
-  if (formData.value?.hasOwnProperty(item_options_form.value.name)) {
-    console.log(11111);
-    item_options_form.value.default_value =
-      formData.value[item_options_form.value.name];
-  }
+onUnmounted(() => {
+  console.log("111销毁");
 });
 
-// 监听数据配置项默认值发生改变的时候，直接将其更新到视图上显示
-watchPostEffect(() => {
-  if (isEmpty(item_options_form.value)) return;
-  console.log("22222");
-  updataFormData({
-    [item_options_form.value.name]: cloneDeep(
-      item_options_form.value.default_value
-    ),
-  });
-});
+// onMounted(() => {
+//   console.log("66666");
+//   form_item_options_form.value =
+//     cloneDeep(active_element.value?.form_item_options) || {};
+//   item_options_form.value = cloneDeep(active_element.value?.options) || {};
+// });
 
-// 监听数据配置项发生改变的时候，将其直接更新到视图上
-watchPostEffect(() => {
-  console.log("33333");
-  updata_form_item_options(form_item_options_form.value);
-  updata_options(item_options_form.value);
-});
+// // 配置项赋初始默认值;
+// watchPostEffect(() => {
+//   if (formData.value?.hasOwnProperty(item_options_form.value.name)) {
+//     console.log(11111);
+//     item_options_form.value.default_value =
+//       formData.value[item_options_form.value.name];
+//   }
+// });
+
+// // 监听数据配置项默认值发生改变的时候，直接将其更新到视图上显示
+// watchPostEffect(() => {
+//   if (isEmpty(item_options_form.value)) return;
+//   console.log("22222");
+//   updataFormData({
+//     [item_options_form.value.name]: cloneDeep(
+//       item_options_form.value.default_value
+//     ),
+//   });
+// });
+
+// // 监听数据配置项发生改变的时候，将其直接更新到视图上
+// watchPostEffect(() => {
+//   console.log("33333");
+//   updata_form_item_options(form_item_options_form.value);
+//   updata_options(item_options_form.value);
+// });
 </script>
 
 <style scoped lang="scss"></style>

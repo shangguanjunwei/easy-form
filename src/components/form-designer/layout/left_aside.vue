@@ -82,7 +82,7 @@ const onClone = (original: any) => {
   } else {
     Object.assign(res, { children: [] });
   }
-  return res;
+  return cloneDeep(res);
 };
 </script>
 

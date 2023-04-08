@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, onUnmounted } from "vue";
 import { useWidgetComponentMixin } from "@/mixins/widget_component_mixin";
 const { updataFormData, formData } = useWidgetComponentMixin();
 // 传入的 配置项
