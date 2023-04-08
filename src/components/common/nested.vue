@@ -19,15 +19,26 @@
         <div v-if="!props.isFirst" class="handle-div left-top-div move-btn">
           <el-icon><Rank /></el-icon>
         </div>
+        
         <!-- 表单元素 -->
         <el-form-item
           v-if="element.is_form_item"
           v-bind="element.form_item_options"
         >
-          <component :is="element.comp_name" :options="element.options" />
+        {{ element.id }}
+          <component
+            :is="element.comp_name"
+            :options="element.options"
+            :key="element.id"
+          />
         </el-form-item>
         <!-- 非表单元素 -->
-        <component v-else :is="element.comp_name" :options="element.options">
+        <component
+          v-else
+          :is="element.comp_name"
+          :options="element.options"
+          :key="element.id"
+        >
           <nested class="draggle-demo-min-div" :tasks="element.children" />
         </component>
         <!-- 嵌套元素 -->

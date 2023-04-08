@@ -17,7 +17,7 @@ const options: options_type = {
     "prefix-icon": "", // 输入框头部图标
     "suffix-icon": "", // 输入框尾部图标
     readonly: false, // 完全只读
-    default_value: "", // 输入框默认值
+    default_value: "99", // 输入框默认值
   },
   "el-select": {
     name: "",
