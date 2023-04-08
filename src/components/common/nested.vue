@@ -95,6 +95,8 @@ const draggable_ptions = ref({
 const draggableChange = (e: any) => {
   // 如果是新增的元素
   if (e.hasOwnProperty("added")) {
+    // 更新选中的元素
+    updata_active_element(e.added.element);
     if (e.added.element.is_form_item) {
       // 如果是表单元素，才给 formData 增加元素
       updataFormData({
@@ -103,8 +105,6 @@ const draggableChange = (e: any) => {
         ),
       });
     }
-    // 更新选中的元素
-    updata_active_element(e.added.element);
   }
 };
 // 选中元素

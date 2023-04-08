@@ -104,7 +104,14 @@
 import myRightElCollapse from "../components/my-right-el-collapse.vue";
 import { useListMixin } from "@/mixins/list_mixin";
 import { useWidgetComponentMixin } from "@/mixins/widget_component_mixin";
-import { ref, watchPostEffect, onMounted, onUnmounted } from "vue";
+import {
+  ref,
+  watchPostEffect,
+  onMounted,
+  onUnmounted,
+  watch,
+  onBeforeUnmount,
+} from "vue";
 import dict from "@/config/common_config";
 import { cloneDeep, isEmpty } from "lodash";
 const { updata_form_item_options, updata_options, active_element } =
@@ -115,40 +122,36 @@ const { formData, updataFormData } = useWidgetComponentMixin();
 const form_item_options_form = ref<any>({});
 // item 配置项
 const item_options_form = ref<any>({});
+const fistEnter = ref<boolean>(true);
 
-// onMounted(() => {
-//   console.log("66666");
-//   form_item_options_form.value =
-//     cloneDeep(active_element.value?.form_item_options) || {};
-//   item_options_form.value = cloneDeep(active_element.value?.options) || {};
-// });
+onMounted(() => {
+  const { form_item_options, options } = active_element.value;
+  form_item_options_form.value = cloneDeep(form_item_options);
+  item_options_form.value = cloneDeep(options);
+});
 
-// // 配置项赋初始默认值;
-// watchPostEffect(() => {
-//   if (formData.value?.hasOwnProperty(item_options_form.value.name)) {
-//     console.log(11111);
-//     item_options_form.value.default_value =
-//       formData.value[item_options_form.value.name];
-//   }
-// });
+// 内容区域修改的时候，更新当前的配置
+watchPostEffect(() => {
+  // 如果当前选中的元素的 name 等于当前组件的 name
+  if (active_element.value.options.name === item_options_form.value.name) {
+    item_options_form.value.default_value = cloneDeep(
+      formData.value[item_options_form.value.name]
+    );
+  }
+});
 
-// // 监听数据配置项默认值发生改变的时候，直接将其更新到视图上显示
-// watchPostEffect(() => {
-//   if (isEmpty(item_options_form.value)) return;
-//   console.log("22222");
-//   updataFormData({
-//     [item_options_form.value.name]: cloneDeep(
-//       item_options_form.value.default_value
-//     ),
-//   });
-// });
-
-// // 监听数据配置项发生改变的时候，将其直接更新到视图上
-// watchPostEffect(() => {
-//   console.log("33333");
-//   updata_form_item_options(form_item_options_form.value);
-//   updata_options(item_options_form.value);
-// });
+// 当前的配置发生改变的时候，更新到内容区域
+watchPostEffect(() => {
+  if (active_element.value.options.name === item_options_form.value.name) {
+    updata_form_item_options(form_item_options_form.value);
+    updata_options(item_options_form.value);
+    updataFormData({
+      [item_options_form.value.name]: cloneDeep(
+        item_options_form.value.default_value
+      ),
+    });
+  }
+});
 </script>
 
 <style scoped lang="scss"></style>
