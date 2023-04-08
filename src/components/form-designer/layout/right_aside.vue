@@ -15,7 +15,7 @@ const comp_name = ref<string>("");
 const comp_id = ref<string>("");
 watchPostEffect(() => {
   if (!isEmpty(active_element.value)) {
-    comp_name.value = `easy-${active_element.value?.type}-setting`;
+    comp_name.value = `${active_element.value?.comp_name}-setting`;
     comp_id.value = active_element.value?.id;
   } else {
     comp_name.value = "";
