@@ -13,7 +13,7 @@ const dict = {
   readonly: "完全只读",
   resize: "控制是否能被用户缩放",
   default_value: "输入框默认值",
-  prop: "绑定name",
+  prop: "唯一值",
   "label-width": "标签宽度",
   required: "是否必填",
   rules: "验证规则",

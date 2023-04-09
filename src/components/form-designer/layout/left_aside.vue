@@ -75,7 +75,6 @@ const onClone = (original: any) => {
     Object.assign(res, {
       form_item_options: {
         ...entry_form_item_options,
-        prop: name,
         label: original.name,
       },
     });

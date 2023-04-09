@@ -21,6 +21,7 @@
         </div>
 
         <!-- 表单元素 -->
+        {{ element.options?.name }}
         <el-form-item
           v-if="element.is_form_item"
           v-bind="element.form_item_options"
