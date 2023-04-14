@@ -42,9 +42,14 @@ import leftAside from "./layout/left_aside.vue";
     position: relative;
   }
   .el-aside {
-    width: $aside-width;
     height: $aside-height;
     position: relative;
+    &.left-aside {
+      width: $left-aside-width;
+    }
+    &.right-aside {
+      width: $right-aside-width;
+    }
   }
   .el-main {
     height: $main-height;

@@ -125,37 +125,11 @@ const form_item_options_form = ref<any>({});
 const item_options_form = ref<any>({});
 const fistEnter = ref<boolean>(true);
 
-// onMounted(() => {
-//   const { form_item_options, options } = active_element.value;
-//   form_item_options_form.value = cloneDeep(form_item_options);
-//   item_options_form.value = cloneDeep(options);
-// });
-
-// // 内容区域修改的时候，更新当前的配置
-// watchPostEffect(() => {
-//   // 如果当前选中的元素的 name 等于当前组件的 name
-//   if (active_element.value.options.name === item_options_form.value.name) {
-//     item_options_form.value.default_value = cloneDeep(
-//       formData.value[item_options_form.value.name]
-//     );
-//   }
-// });
-
-// // 当前的配置发生改变的时候，更新到内容区域
-// watchPostEffect(() => {
-//   if (active_element.value.options.name === item_options_form.value.name) {
-//     updataFormData({
-//       [item_options_form.value.name]: cloneDeep(
-//         item_options_form.value.default_value
-//       ),
-//     });
-//   }
-// });
-
-// watchPostEffect(() => {
-//   updata_form_item_options(form_item_options_form.value);
-//   updata_options(item_options_form.value);
-// });
+onMounted(() => {
+  const { form_item_options, options } = active_element.value;
+  form_item_options_form.value = cloneDeep(form_item_options);
+  item_options_form.value = cloneDeep(options);
+});
 </script>
 
 <style scoped lang="scss"></style>

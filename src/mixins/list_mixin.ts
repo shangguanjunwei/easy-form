@@ -1,4 +1,4 @@
-import { ref, computed } from "vue";
+import { ref, computed, shallowRef } from "vue";
 import { v4 as uuidv4 } from "uuid";
 import { cloneDeep, isEmpty } from "lodash";
 
@@ -7,13 +7,15 @@ type list_item = {
 };
 
 const list = ref<list_item[]>([{ id: uuidv4(), children: [] }]);
-const _active_element = ref<any>(); // 当前选中的元素
+const _active_element = ref<any>({}); // 当前选中的元素
 
 export const useListMixin = () => {
   // 更新当前选中的元素
   const updata_active_element = (element: Object) => {
-    console.log('执行选中元素')
-    _active_element.value = element;
+    _active_element.value = cloneDeep(element);
+    setTimeout(() => {
+      _active_element.value.sgjw = '555';
+    }, 3000);
   };
   // 删除当前选中的元素
   const delete_active_element = () => {

@@ -96,8 +96,8 @@ const draggable_ptions = ref({
 const draggableChange = (e: any) => {
   // 如果是新增的元素
   if (e.hasOwnProperty("added")) {
-    // 更新选中的元素
-    updata_active_element(e.added.element);
+    // 更新选中的元素, 这里需要深拷贝，不然会影响到原始数据
+    updata_active_element(cloneDeep(e.added.element));
     if (e.added.element.is_form_item) {
       // 如果是表单元素，才给 formData 增加元素
       updataFormData({
@@ -108,6 +108,7 @@ const draggableChange = (e: any) => {
     }
   }
 };
+
 // 选中元素
 const onChooseElement = (element: any) => {
   // 如果是第一层或者是当前选中的元素，不做任何操作

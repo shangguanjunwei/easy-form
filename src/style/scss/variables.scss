@@ -4,8 +4,11 @@ $border: 1px solid #e5e5e5;
 // 顶部 header 高度
 $header-height: 50px;
 
-// 侧边栏宽度
-$aside-width: 280px;
+// 左边侧边栏宽度
+$left-aside-width: 280px;
+
+// 右边侧边栏宽度
+$right-aside-width: 280px;
 
 // 侧边栏高度
 $aside-height: calc(100vh - #{$header-height});
